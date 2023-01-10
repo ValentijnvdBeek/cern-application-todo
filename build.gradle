@@ -2,6 +2,9 @@ plugins {
 	id 'org.springframework.boot' version '2.6.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'jacoco'
+	id 'pmd'
+	id 'checkstyle'
 }
 
 group = 'ch.cern'
@@ -21,4 +24,34 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+    jacoco {
+       enabled = true
+       includes = ['ch.cern.*']
+       excludes = []
+    }       
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			enabled = true
+			element = 'CLASS'
+			includes = ['ch.cern.*']
+
+			limit {
+				counter = 'LINE'
+				value = 'TOTALCOUNT'
+				maximum = 0.3
+			}
+		}
+	}
+}
+
+checkstyle {
+	toolVersion "8.25"
+	configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+
+	ignoreFailures = false
+	maxErrors = 0
+	maxWarnings = 0
 }

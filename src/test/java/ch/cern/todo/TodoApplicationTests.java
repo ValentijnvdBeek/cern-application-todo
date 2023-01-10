@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TodoApplicationTest {
+public class TodoApplicationTests {
 
 	@Autowired
 	private MockMvc mvc;

@@ -8,7 +8,6 @@ import ch.cern.todo.repositories.TaskCategoryRepository;
 
 import ch.cern.todo.repositories.TasksRepository;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -38,17 +37,17 @@ public class TodoController {
 
     /**
      * Gets all the tasks from the system and returns it as a JSON list.
-     * By default it sorts each task by descending by time, but this can be configured.
+     * By default, it sorts each task by descending by time, but this can be configured.
      * It also supports filtering by name to narrow the search area.
      *
      * @param name Task name that the returned should be filtered
      *     on. If left empty, it will return all tasks
-     * @param sort Can either be name or time. If name, it will sort
+     * @param sort Can either be naming or time. If set to name, it will sort
      *     the tasks alphabetically
      * @param direction Either descending or descending.
      *
      * @return All tasks matching the invariants
-     * @see Task
+     * @see Tasks
      */
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     @GetMapping(prelude + "/tasks")
@@ -63,7 +62,7 @@ public class TodoController {
         }
 
         // By default, we sort time ascending
-        // False positive: DD-anamoly
+        // False positive: DD-anomaly
         Comparator<Tasks> comp = Comparator.comparing(Tasks::getDeadline,
                                                       Comparator.naturalOrder());
         if (sort != null && sort.equals("name")) {
@@ -83,7 +82,7 @@ public class TodoController {
     /**
      * Gets a particular task based on its id.
      * @return Task associated with the id.
-     * @see Task
+     * @see Tasks
      */
     @GetMapping(prelude + "/tasks/{id}")
     public Tasks getTask(@PathVariable(name="id") Long id)
@@ -102,10 +101,10 @@ public class TodoController {
 
     /**
      * Create a TODO in the system. Every task should have at least have a category object
-     * with an id parameter, taskname and deadline.
+     * with an id parameter, taskName and deadline.
      *
-     * @param task JSON representation of a a task.
-     * @see Task
+     * @param task JSON representation of a task.
+     * @see Tasks
      */
     @PostMapping(prelude + "/tasks")
     public Tasks addTask(@RequestBody Tasks task) throws BadRequestException, NotFoundException {
@@ -130,7 +129,7 @@ public class TodoController {
     }
 
     /**
-     * Safely updates a task identified by its ids. This methods takes
+     * Safely updates a task identified by its ids. This method takes
      * the json representation with the requested changes and
      * preserves the prior-contents.
      */

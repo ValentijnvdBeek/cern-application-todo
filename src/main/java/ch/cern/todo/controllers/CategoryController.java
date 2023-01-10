@@ -58,7 +58,7 @@ public class CategoryController {
         // An empty category does not make sense to order items. This is also
         // ensured by the database, but by checking this early we can easily
         // give an easily readable error message.
-        if (Objects.equals(category.getCategoryName(), "") || category.getCategoryName() == null) {
+        if (category.getCategoryName() == null || category.getCategoryName().equals("")) {
             throw new BadRequestException("categoryName cannot be empty or null");
         }
 
@@ -86,12 +86,12 @@ public class CategoryController {
      * call. This provides one additional layer of deliberate action
      * before any data can be deleted. */
     @DeleteMapping(prelude + "/categories/{id}")
-    public String deleteCategoryById(@PathVariable("id") Long id) {
+    public String deleteCategoryById(@PathVariable("id") Long id) throws NotFoundException {
         String msg;
         try {
             categoryRepository.deleteById(id);
         } catch (EmptyResultDataAccessException ex) {
-            return "Category " + id + " cannot be found";
+            throw new NotFoundException("Category " + id + " cannot be found");
         }
         return "Successfully deleted category: " + id;
     }

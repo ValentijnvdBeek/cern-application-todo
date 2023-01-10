@@ -1,4 +1,4 @@
-package ch.cern.todo;
+package ch.cern.todo.controllers;
 
 import ch.cern.todo.entities.TaskCategory;
 import ch.cern.todo.errors.BadRequestException;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     @Autowired
     private transient TaskCategoryRepository categoryRepository;
-    
+
     final transient String prelude = "/v1";
 
     @GetMapping("/")

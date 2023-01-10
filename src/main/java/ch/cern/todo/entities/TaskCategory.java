@@ -1,5 +1,8 @@
 package ch.cern.todo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +18,18 @@ public class TaskCategory {
 
     @Column(name = "CATEGORY_DESCRIPTION", length = 500)
     private String categoryDescription;
+
+    @OneToMany(mappedBy = "taskCategory", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Tasks> tasks = new LinkedHashSet<>();
+
+    public Set<Tasks> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Tasks> tasks) {
+        this.tasks = tasks;
+    }
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;

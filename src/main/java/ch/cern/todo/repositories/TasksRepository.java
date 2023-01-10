@@ -15,19 +15,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface TasksRepository extends JpaRepository<Tasks, Integer> {
-    Optional<Tasks> findByTaskId(@NonNull int taskId);
+    Optional<Tasks> findByTaskId(@NonNull Long taskId);
 
     List<Tasks> findByTaskNameIgnoreCase(@NonNull String taskName);
-
-    @Transactional
-    @Modifying
-    @Query("update Tasks t set t.taskId = :taskId1, t.taskName = :taskName, "
-           + "t.taskDescription = :taskDescription, t.taskCategory = :taskCategory, "
-           + " t.deadline = :deadline where t.taskId = :taskId6")
-    int updateTaskById(@Param("taskId") int taskId, @Param("taskName") String taskName,
-                       @Param("taskDescription") String taskDescription, @Param("taskCategory")
-                       TaskCategory taskCategory, @Param("deadline") Timestamp deadline,
-                       @Param("taskId") int taskId1);
 
     long deleteByTaskId(@NonNull int taskId);
 

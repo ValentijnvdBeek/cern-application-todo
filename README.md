@@ -134,3 +134,16 @@ can be run by using the following additional commands:
   current coverage by unit tests.
 - `./gradlew spotbugsMain` - Run the spotbugs static analysis tool
 
+# JSON Objects 
+A description of the JSON objects.
+
+## Task:
+- taskId: id identifiying the task
+- taskName: name of the task
+- taskCategory: Task category object
+- deadline: timestamp in the form YYYY-mm-ddThh:mm:sss
+
+## Category
+- id: id identifying the category
+- categoryName: name of the category
+- categoryDescription: description of the category

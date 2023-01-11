@@ -28,7 +28,7 @@ public class CategoryController {
     }
 
     /**
-     * Gets the category by an unique name.
+     * Gets the category by a unique name.
      */
     @GetMapping(prelude + "/categories/name/{name}")
     public TaskCategory getCategoryByName(@PathVariable("name") String name) {

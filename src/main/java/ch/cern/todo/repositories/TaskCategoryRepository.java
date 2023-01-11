@@ -17,13 +17,6 @@ public interface TaskCategoryRepository extends JpaRepository<TaskCategory, Long
     @Override
     void deleteById(Long along);
 
-    @Transactional
-    @Modifying
-    @Query("update TaskCategory t set t.categoryName = :categoryName, "
-           + " t.categoryDescription = :categoryDescription")
-    int updateCategoryById(@Param("categoryName") String categoryName,
-                           @Param("categoryDescription") String categoryDescription);
-
     @Query("select t from TaskCategory t where t.categoryName = :categoryName")
     TaskCategory findByCategoryName(@Param("categoryName") String categoryName);
 }

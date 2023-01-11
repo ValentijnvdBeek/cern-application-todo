@@ -11,8 +11,11 @@ import java.sql.Timestamp;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -52,6 +55,7 @@ public class TodoController {
     @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     @GetMapping(prelude + "/tasks")
     public List<Tasks> getTasks(@RequestParam(required=false, name="name") String name,
+                                @RequestParam(required=false, name="category") String category,
                                 @RequestParam(required=false, name="sort") String sort,
                                 @RequestParam(required=false, name="direction") String direction) {
         List<Tasks> tasks;
@@ -59,6 +63,12 @@ public class TodoController {
             tasks = tasksRepository.findByTaskNameIgnoreCase(name);
         } else {
             tasks = tasksRepository.findAll();
+        }
+
+        if (category != null) {
+            tasks = tasks.stream()
+                .filter(task -> task.getTaskCategory() .getCategoryName().equals(category))
+                .collect(Collectors.toList());
         }
 
         // By default, we sort time ascending
@@ -190,4 +200,20 @@ public class TodoController {
         }
         return tasksRepository.findAll();
     }
+
+	/**
+	 * Deletes a task from the database.
+	 */
+  @DeleteMapping(prelude + "/tasks/{id}")
+  @Transactional
+  public String deleteTaskById(@PathVariable("id") Long id) throws NotFoundException {
+      String msg;
+      try {
+          tasksRepository.deleteById(id);
+      } catch (EmptyResultDataAccessException ex) {
+          throw new NotFoundException("Task " + id + " cannot be found");
+      }
+      return "Successfully deleted task: " + id;
+  }
+	 
 }

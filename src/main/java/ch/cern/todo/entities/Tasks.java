@@ -19,7 +19,7 @@ public class Tasks {
     @Column(name="TASK_DESCRIPTION")
     private String taskDescription;
 
-    @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.MERGE}, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, optional = false)
     @JoinColumn(name = "task_category_id", nullable = false)
     private TaskCategory taskCategory;
 

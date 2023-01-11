@@ -5,11 +5,12 @@ plugins {
 	id 'jacoco'
 	id 'pmd'
 	id 'checkstyle'
+        id "com.github.spotbugs" version "5.0.13"
 }
 
 group = 'ch.cern'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = "16"
 
 repositories {
 	mavenCentral()
@@ -55,3 +56,4 @@ checkstyle {
 	maxErrors = 0
 	maxWarnings = 0
 }
+targetCompatibility = JavaVersion.VERSION_16

@@ -19,7 +19,7 @@ public class TaskCategory {
     @Column(name = "CATEGORY_DESCRIPTION", length = 500)
     private String categoryDescription;
 
-    @OneToMany(mappedBy = "taskCategory", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "taskCategory", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Tasks> tasks = new LinkedHashSet<>();
 

@@ -59,12 +59,14 @@ public class TodoController {
                                 @RequestParam(required=false, name="sort") String sort,
                                 @RequestParam(required=false, name="direction") String direction) {
         List<Tasks> tasks;
+        // If the name is set we can filter our input by the name, else we take all tasks
         if (name != null) {
             tasks = tasksRepository.findByTaskNameIgnoreCase(name);
         } else {
             tasks = tasksRepository.findAll();
         }
 
+        // Filter the resulting list on the name of the category associated with it.
         if (category != null) {
             tasks = tasks.stream()
                 .filter(task -> task.getTaskCategory().getCategoryName().equals(category))
@@ -73,19 +75,21 @@ public class TodoController {
 
         // By default, we sort time ascending
         // False positive: DD-anomaly
+        // Set the standard sorting mechanisms to be time
         Comparator<Tasks> comp = Comparator.comparing(Tasks::getDeadline,
                                                       Comparator.naturalOrder());
+        // Sort on name instead if requested
         if (sort != null && sort.equals("name")) {
             comp = Comparator.comparing(Tasks::getTaskName, String::compareToIgnoreCase)
                 .reversed();
         }
 
+        // Reverse the direction.
         if (direction != null && (direction.equals("desc") || direction.equals("descending"))) {
             comp = comp.reversed();
         }
 
         tasks.sort(comp);
-
         return tasks;
     }
 
@@ -126,6 +130,8 @@ public class TodoController {
             throw new BadRequestException("Deadline, task category and task name cannot be null");
         }
 
+        // Add all the information about the category to the request.
+        // This is not required, but is an extra safety mechanism.
         TaskCategory category = this.getTaskCategory(task.getTaskCategory().getId());
         task.setTaskCategory(category);
 
@@ -186,6 +192,7 @@ public class TodoController {
     @GetMapping(prelude + "/tasks/deadline/{when}")
     public List<Tasks> getTasksDeadline(@PathVariable(name="when") String when,
                                         @RequestParam(name="time", required=false) String time) {
+        // If no timestamp is given we want to compare to our current time
         Timestamp timestamp = (time != null) ? Timestamp.valueOf(time) :
             new Timestamp(System.currentTimeMillis());
 

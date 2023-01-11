@@ -27,7 +27,7 @@ public class TodoController {
     @Autowired
     private transient TaskCategoryRepository taskCategoryRepository;
 
-    final transient String prelude = "/v1";
+    static final String prelude = "/v1";
 
     private TaskCategory getTaskCategory(Long id) throws NotFoundException {
         // Fetch the category based on just the ID and then get it out of the database.
@@ -67,7 +67,7 @@ public class TodoController {
 
         if (category != null) {
             tasks = tasks.stream()
-                .filter(task -> task.getTaskCategory() .getCategoryName().equals(category))
+                .filter(task -> task.getTaskCategory().getCategoryName().equals(category))
                 .collect(Collectors.toList());
         }
 
@@ -167,10 +167,6 @@ public class TodoController {
             updatedTask.setTaskName(task.getTaskName());
         }
 
-        if (updatedTask.getDeadline() == null) {
-            updatedTask.setDeadline(task.getDeadline());
-        }
-
         if (updatedTask.getTaskDescription() == null) {
             updatedTask.setTaskDescription(task.getTaskDescription());
         }
@@ -201,19 +197,19 @@ public class TodoController {
         return tasksRepository.findAll();
     }
 
-	/**
-	 * Deletes a task from the database.
-	 */
-  @DeleteMapping(prelude + "/tasks/{id}")
-  @Transactional
-  public String deleteTaskById(@PathVariable("id") Long id) throws NotFoundException {
-      String msg;
-      try {
-          tasksRepository.deleteById(id);
-      } catch (EmptyResultDataAccessException ex) {
-          throw new NotFoundException("Task " + id + " cannot be found");
-      }
-      return "Successfully deleted task: " + id;
-  }
-	 
+    /**
+     * Deletes a task from the database.
+     */
+    @DeleteMapping(prelude + "/tasks/{id}")
+    @Transactional
+    public String deleteTaskById(@PathVariable("id") Long id) throws NotFoundException {
+        String msg;
+        try {
+            tasksRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException ex) {
+            throw new NotFoundException("Task " + id + " cannot be found");
+        }
+        return "Successfully deleted task: " + id;
+    }
+
 }

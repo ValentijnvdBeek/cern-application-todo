@@ -132,5 +132,5 @@ can be run by using the following additional commands:
 - `./gradlew pmdMain` - Check the code using PMD
 - `./gradlew jacocoTestReport` - Generate a HTML report to see the
   current coverage by unit tests.
-  
+- `./gradlew spotbugsMain` - Run the spotbugs static analysis tool
 

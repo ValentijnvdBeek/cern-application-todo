@@ -24,11 +24,11 @@ public class TaskCategory {
     private Set<Tasks> tasks = new LinkedHashSet<>();
 
     public Set<Tasks> getTasks() {
-        return tasks;
+        return Set.copyOf(this.tasks);
     }
 
     public void setTasks(Set<Tasks> tasks) {
-        this.tasks = tasks;
+        this.tasks = Set.copyOf(tasks);
     }
 
     public void setCategoryName(String categoryName) {

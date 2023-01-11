@@ -6,7 +6,6 @@ import ch.cern.todo.errors.NotFoundException;
 import ch.cern.todo.repositories.TaskCategoryRepository;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class CategoryController {
     @Autowired
     private transient TaskCategoryRepository categoryRepository;
 
-    final transient String prelude = "/v1";
+    static final String prelude = "/v1";
 
     @GetMapping("/")
     public String index() {
@@ -36,7 +35,7 @@ public class CategoryController {
     }
 
     /**
-     * Gets the category by an unique auto-generated id.
+     * Gets the category by a unique auto-generated id.
      */
     @GetMapping(prelude + "/categories/{id}")
     public TaskCategory getCategoryById(@PathVariable("id") Long id) throws NotFoundException {

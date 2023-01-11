@@ -27,11 +27,12 @@ public class Tasks {
     private Timestamp deadline;
 
     public Timestamp getDeadline() {
-        return deadline;
+        return (Timestamp) deadline.clone();
     }
 
+    /* These two lines trigger a false positive spotbugs error */
     public void setDeadline(Timestamp deadline) {
-        this.deadline = deadline;
+        this.deadline = (Timestamp) deadline.clone();
     }
 
     public TaskCategory getTaskCategory() {
@@ -74,6 +75,11 @@ public class Tasks {
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
             return false;
         }
+
+        if (o.getClass() != this.getClass()) {
+            return false;
+        }
+
         Tasks tasks = (Tasks) o;
         return taskId != null && taskId.equals(tasks.taskId);
     }

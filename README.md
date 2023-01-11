@@ -41,40 +41,40 @@ REST API, extract the id and then modify it.
 ```
 
 ### Create Category
-*URL*: /v1/categories
-*Method*: POST
-*Input*: JSON object describing the category. Must contain a name. 
-*Output*: JSON representation of the entered category. 
+- **URL:** `/v1/categories`
+- **Method:** POST
+- **Input:** JSON object describing the category. Must contain a name. 
+- **Output:** JSON representation of the entered category. 
   
 ### View categories
-*URL*: /v1/categories
-*Method*: GET
-*Input*: None
-*Output*: List of all categories
+- **URL:** `/v1/categories`
+- **Method:** GET
+- **Input:** None
+- **Output:** List of all categories
 
 ### Get category by id
-*URL*: /v1/categories/{id}
-*Method*: GET 
-*Input*: None
-*Output*: Requested category
+- **URL:** `/v1/categories/{id}`
+- **Method:** GET 
+- **Input:** None
+- **Output:** Requested category
 
 ### Get category by name
-*URL*: /v1/categories/name/{name}
-*Method*: GET
-*Input*: None
-*Output*: Category matching that name. 
+- **URL:** `/v1/categories/name/{name}`
+- **Method:** GET
+- **Input:** None
+- **Output:** Category matching that name. 
 
 ### Delete category by id
-*URL*: /v1/categories/{id}
-*Method*: DELETE
-*Input*: -
-*Output*: Successfully deleted category: {id}
+- **URL:** `/v1/categories/{id}`
+- **Method:** DELETE
+- **Input:** -
+- **Output:** Successfully deleted category: {id}
 
 ### Update category by id
-*URL*: /v1/categories
-*Method*: PUT
-*Input*: JSON object of the category containing at least an id. 
-*Output*: The modified object.
+- **URL:** `/v1/categories`
+- **Method:** PUT
+- **Input:** JSON object of the category containing at least an id. 
+- **Output:** The modified object.
 
 ## Tasks
 Tasks are objects with a set deadline that can be tagged by a singular
@@ -83,48 +83,48 @@ is identified in the API purely by the ID unless it is fetched from
 the database. 
 
 ### Get tasks from database
-*URL*: /v1/tasks
-*Method*: GET
-*Input*: 
-- *Name:* a string that is used to filter the tasks by taskName.
-- *Sort:* indicates if tasks are to be sorted by _time_ or _name_.
-- *Direction:* are tasks sorted in _ascending_ or _descending_ order.
-- *Category*: filter task by category name
-*Ouput*: A list of tasks that, by default, are sorted ascending
+- **URL:** `/v1/tasks`
+- **Method:** GET
+- **Input:** 
+  - **Name:** a string that is used to filter the tasks by taskName.
+  - **Sort:** indicates if tasks are to be sorted by _time_ or _name_.
+  - **Direction:** are tasks sorted in _ascending_ or _descending_ order.
+  - **Category:** filter task by category name
+- **Ouput:** A list of tasks that, by default, are sorted ascending
 on time.
 
-
 ### Get task from database
-*URL*: /v1/tasks/{id}
-*Method*: GET
-*Input*: None
-*Output*: Task from the database
+- **URL:** `/v1/tasks/{id}`
+- **Method:** GET
+- **Input:** None
+- **Output:** Task from the database
 
 ### Update task
-*URL*: /v1/tasks
-*Method*: PUT
-*Input*: JSON task object cotnaing at least an id
-*Output*: Updated task
+- **URL:** `/v1/tasks`
+- **Method:** PUT
+- **Input:** JSON task object cotnaing at least an id
+- **Output:** Updated task
 
 ### Add task
-*URL*: /v1/tasks
-*Method*: POST
-*Input*: JSON task object containing at least a category with id. 
-*Output*: The task object
+- **URL:** `/v1/tasks`
+- **Method:** POST
+- **Input:** JSON task object containing at least a category with id. 
+- **Output:** The task object
 
 ### Get by deadline
-*URL*: /v1/tasks/deadline/[when]
-*Method*: GET
-*Input*:
-- *when*: do you want the tasks with the deadline is _before_ or _after_
-- *time*: what is the time you are comparing the deadline.
-*Output*:
+- **URL:** `/v1/tasks/deadline/[when]`
+- **Method:** GET
+- **Input:**
+  - **when:** do you want the tasks with the deadline is _before_ or _after_
+  - **time:** what is the time you are comparing the deadline.
+**Output***: List of JSON objects which are either before or after the
+deadline.
 
 # Static verification
 This repository uses the following tools to ensure code quality is
-maintained: PMD (static analysis), Checkstyle (stylechecker) & Jacoco
-(test coverage). These tools can be run by using the following
-additional commands:
+maintained: `PMD` (static analysis), `Checkstyle` (stylechecker),
+`Spotbug` (static analysis) & `Jacoco` (test coverage). These tools
+can be run by using the following additional commands:
 
 - `./gradlew test` - Run the test suite
 - `./gradlew checkstyleMain` - Run the stylechecker configured to
